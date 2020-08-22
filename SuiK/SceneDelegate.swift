@@ -3,6 +3,15 @@ import SwiftUI
 import SwiftUIKit
 import Later
 
+let colors = [
+    Color.blue,
+    Color.red,
+    Color.green,
+    Color.orange,
+    Color.purple,
+    Color.black
+]
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
@@ -48,20 +57,31 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                                 ContainerView(parent: vc) {
                                     UIHostingController(rootView:
                                         ContentView()
-                                            .foregroundColor([Color.blue,
-                                                 Color.red,
-                                                 Color.green,
-                                                 Color.orange,
-                                                 Color.purple,
-                                                 Color.black].randomElement())
+                                            .foregroundColor(colors.randomElement())
                                     )
                                 }
                         }
                     }
+                    .didSelectHandler { item in
+                        let copy = item
+                        Navigate.shared.toast {
+                            copy
+                                .padding()
+                                .background(color: .black)
+                        }
+                    }
+                    .navigateSetRight(barButton: BarButton {
+                        Button("Alert") {
+                            Navigate.shared.alert(title: "Tap!", message: "Message.", secondsToPersist: 3)
+                        }
+                    })
             }
         }
         
         window.rootViewController = UINavigationController(rootViewController: vc)
+            .configure { Navigate.shared.configure(controller: $0) }
+        
+        
         self.window = window
         window.makeKeyAndVisible()
     }
