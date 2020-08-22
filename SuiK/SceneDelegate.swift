@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: windowScene)
         
-        let view: UIView = Label("Loading...")
+        let view: UIView = Label("Loading")
             .font(.largeTitle)
             .text(alignment: .center)
             .number(ofLines: 100)
